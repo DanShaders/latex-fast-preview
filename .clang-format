@@ -1,0 +1,29 @@
+BasedOnStyle: Google
+IndentWidth: 2
+
+AccessModifierOffset: -2
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+ColumnLimit: 100
+DerivePointerAlignment: false
+IndentCaseBlocks: false
+InsertBraces: true
+NamespaceIndentation: Inner
+PointerAlignment: Left
+SpaceAfterCStyleCast: true
+QualifierAlignment: Right
+PenaltyBreakComment: 1000000000
+
+IndentPPDirectives: AfterHash
+IncludeCategories:
+  - Regex:           '^(<|")AK/.*\.h>'
+    Priority:        1
+    SortPriority:    0
+  - Regex:           '^<.*'
+    Priority:        2
+    SortPriority:    0
+  - Regex:           '.*'
+    Priority:        3
+    SortPriority:    0

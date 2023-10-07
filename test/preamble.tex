@@ -1,0 +1,217 @@
+\documentclass[paper, 12pt]{extarticle}
+
+\usepackage{cmap}                   % поиск в PDF
+\usepackage{mathtext}               % русские буквы в формулах
+\usepackage[T2A]{fontenc}           % кодировка
+\usepackage[utf8]{inputenc}         % кодировка исходного текста
+\usepackage[english]{babel} % локализация и переносы
+\usepackage{indentfirst}            % красная строка в первом абзаце
+\frenchspacing                      % равные пробелы между словами и предложениями
+
+\usepackage{enumitem}
+\usepackage[left=1.9cm,right=1.32cm,top=1.9cm,bottom=3.67cm]{geometry}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools}
+\usepackage{icomma}
+\usepackage{blindtext}
+\usepackage{multicol}
+\usepackage{paracol}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{comment}
+\usepackage{xcolor}
+\usepackage{calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\usepackage{subcaption}
+\usepackage{makecell}
+\usepackage{multirow}
+
+\usepackage{tikz}
+\usepackage{framed}
+\usepackage{physics}
+
+\usepackage{stackrel}
+\usepackage{calc}
+\usepackage{afterpage}
+\usepackage{pdflscape}
+
+\theoremstyle{plain}
+\newtheorem{theorem}[equation]{Theorem}
+\newtheorem{lemma}[equation]{Lemma}
+\newtheorem*{exercise}{Exercise}
+\newtheorem{proposition}{Proposition}
+\newtheorem*{problem}{Problem}
+
+\theoremstyle{definition}
+\newtheorem{definition}[equation]{Definition}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{note}{Note}
+\newtheorem*{reminder}{Remainder}
+\newtheorem*{example}{Example}
+
+\theoremstyle{remark}
+\newtheorem*{solution}{Solution}
+
+\newcommand{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
+\newcommand{\lab}[1]{\mathit{#1}{:}\ }
+\renewcommand{\var}[1]{\mathit{#1}}
+
+\DeclareMathOperator{\ap}{\Theta\!}
+\DeclareMathOperator{\ah}{\mathcal{O}\!}
+\DeclareMathOperator{\al}{\Omega\!}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+
+\renewcommand{\le}{\leqslant}
+\renewcommand{\ge}{\geqslant}
+
+\newcommand{\df}[2]{\begin{definition}\textit{#1} -- #2\end{definition}}
+
+\renewcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\renewcommand{\grad}{\mathrm{grad}\:}
+\newcommand{\dlta}{\text{d}}
+\newcommand{\thus}{\;\hm{\Rightarrow}\;}
+\newcommand{\isconst}{=\text{const}}
+
+\newcommand{\defeq}{\vcentcolon=}
+\newcommand{\defev}{\stackrel{\Delta}{\Longleftrightarrow}}
+\newcommand{\deriv}[3][1]{%
+    \ifthenelse{#1>1}{%
+        \frac{\dlta^{#1} {#2}}{\dlta {#3}^{#1}}
+    }{%
+        \frac{\dlta {#2}}{\dlta {#3}}
+    }%
+}
+\newcommand{\pderiv}[3][1]{%
+    \ifthenelse{#1>1}{%
+        \frac{\partial^{#1} {#2}}{\partial {#3}^{#1}}
+    }{%
+        \frac{\partial {#2}}{\partial {#3}}
+    }%
+}
+\newcommand{\vc}[3]{
+    \ensuremath{\begin{pmatrix} #1 \\ #2 \\ #3 \end{pmatrix}}
+}
+\newcommand{\vp}[1]{
+    \ensuremath{\overrightarrow{#1}}
+}
+\newcommand{\hvc}[3]{
+    \ensuremath{\left(#1, #2, #3\right)}
+}
+\renewcommand{\vb}[2]{
+    \ensuremath{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
+}
+
+\renewcommand{\vec}[1]{\ensuremath{\vectorbold*{#1}}}
+\newcommand{\fnis}[1]{#1{:}\;}
+\newcommand{\RR}{\overline{\mathbb{R}}}
+\newcommand{\sconstr}{\;\vert\;}
+\newcommand{\diag}{{\rm diag}}
+
+\newcommand{\limpinf}{\lim_{n\to+\infty}}
+
+\DeclareMathOperator{\sep}{sep}
+\DeclareMathOperator{\rem}{rem}
+\DeclareMathOperator\arctanh{arctanh}
+\newcommand{\ProcEnsure}{\State \hspace{-0.4cm}\textbf{Ensures: }}
+\newcommand{\ProcRequire}{\State \hspace{-0.4cm}\textbf{Requires: }}
+
+\newcommand{\iffproofR}[2]{\phantom{}
+    \begin{itemize}
+        \item[$\Rightarrow$] #1
+        \item[$\Leftarrow$] #2
+    \end{itemize}
+}
+
+\newcommand{\iffproofL}[2]{\phantom{}
+    \begin{itemize}
+        \item[$\Leftarrow$] #1
+        \item[$\Rightarrow$] #2
+    \end{itemize}
+}
+
+
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\ke}{Ker}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\re}{Re}
+
+\newcommand{\UU}{\overset{\circ}{U}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Cm}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\imp}[2]{
+    (#1\,\,$\ra$\,\,#2)\,\,
+}
+\newcommand{\System}[1]{
+    \left\{\begin{aligned}#1\end{aligned}\right.
+}
+\newcommand{\Root}[2]{
+    \left\{\!\sqrt[#1]{#2}\right\}
+}
+\newcommand{\sub}{\subseteq}
+\newcommand{\afn}[1]{\text{#1}}
+
+
+\usepackage{titlesec}
+
+\titleformat{\section}{\normalfont\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\fontsize{12}{15}\bfseries}{\thesubsection}{1em}{}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\renewcommand\labelitemi{$\triangleright$}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[tableposition=top]{caption}
+
+\newcommand{\ukg}{\text{kg}}
+\newcommand{\ug}{\text{g}}
+\newcommand{\uN}{\text{N}}
+\newcommand{\um}{\text{m}}
+\newcommand{\ucm}{\text{cm}}
+\newcommand{\umm}{\text{mm}}
+\newcommand{\ukm}{\text{km}}
+\newcommand{\unm}{\text{nm}}
+\newcommand{\us}{\text{s}}
+\newcommand{\uK}{\text{K}}
+\newcommand{\umol}{\text{mol}}
+\newcommand{\uJ}{\text{J}}
+\newcommand{\uPa}{\text{Pa}}
+\newcommand{\uA}{\text{A}}
+\newcommand{\uC}{\text{C}}
+\newcommand{\uV}{\text{V}}
+\newcommand{\uuV}{\text{\nu V}}
+\newcommand{\uF}{\text{F}}
+\newcommand{\uom}{\text{Ohm}}
+\newcommand{\uS}{\text{S}}
+\newcommand{\uH}{\text{H}}
+\newcommand{\uW}{\text{W}}
+\newcommand{\usr}{\text{Sr}}
+\newcommand{\ulm}{\text{Lm}}
+\newcommand{\ucd}{\text{Cd}}
+\newcommand{\uHz}{\text{Hz}}
+\newcommand{\ukHz}{\text{kHz}}
+\newcommand{\udB}{\text{dB}}
+
+% \usepgfplotslibrary{external} 
+% \tikzexternalize
+
+\pgfkeys{/pgf/number format/.cd,1000 sep={\,}}
