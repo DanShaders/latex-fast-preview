@@ -23,15 +23,15 @@ void println(std::format_string<Args...> fmt, Args&&... args) {
 template <class... Args>
 [[noreturn]] void panic(std::format_string<Args...> fmt, Args&&... args) {
   std::string line = std::format<Args...>(fmt, std::forward<Args>(args)...);
-  std::cerr << line << std::endl;
+  std::cerr << "Program panicked!\n" << line << std::endl;
   abort();
 }
 
-#define ensure(syscall)                                                            \
-  ({                                                                               \
-    auto return_value = syscall;                                                   \
-    if (return_value == -1) {                                                      \
-      panic(#syscall " failed with errno={} at {}:{}", errno, __FILE__, __LINE__); \
-    }                                                                              \
-    return_value;                                                                  \
+#define ensure(syscall)                                                               \
+  ({                                                                                  \
+    auto return_value = syscall;                                                      \
+    if (return_value == -1) {                                                         \
+      panic("{} failed with errno={} at {}:{}", #syscall, errno, __FILE__, __LINE__); \
+    }                                                                                 \
+    return_value;                                                                     \
   })

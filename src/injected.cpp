@@ -12,6 +12,7 @@
 
 void at_fork() {
   std::vector<std::pair<int, off_t>> fd_offsets;
+
   for (auto fd : std::filesystem::recursive_directory_iterator("/proc/self/fd")) {
     int fd_num = atoi(fd.path().filename().c_str());
     off_t offset = lseek(fd_num, 0, SEEK_CUR);
@@ -23,16 +24,13 @@ void at_fork() {
   while (true) {
     pid_t pid = ensure(syscall(SYS_fork));
 
-    auto start = std::chrono::system_clock::now();
-
     assert(pid > 0);
     int status;
     waitpid(pid, &status, 0);
     assert(WIFEXITED(status) || WIFSIGNALED(status));
 
-    auto end = std::chrono::system_clock::now();
-    std::cout << "Done in " << std::chrono::duration<double>(end - start).count() << "s"
-              << std::endl;
+    int code = WIFEXITED(status) ? WEXITSTATUS(status) : -WTERMSIG(status);
+    ensure(syscall(SYS_control_fork_status, code));
 
     for (auto [fd, offset] : fd_offsets) {
       lseek(fd, offset, SEEK_SET);
