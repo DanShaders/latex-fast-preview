@@ -5,6 +5,7 @@
 #include <format>
 #include <iostream>
 #include <sys/ptrace.h>
+#include <sys/uio.h>
 #include <sys/user.h>
 #include <sys/wait.h>
 #include <syscall.h>
@@ -15,44 +16,31 @@
 
 using namespace std::literals;
 
-auto read_at(pid_t child, word_t ptr) {
-  u64 aligned_ptr = ptr & ~(word_size - 1);
-
-  union {
-    word_t as_word;
-    char as_bytes[word_size];
-  } data;
-  errno = 0;
-  data.as_word = ptrace(PTRACE_PEEKTEXT, child, aligned_ptr, 0);
-  if (errno) {
-    ensure(-1);
-  }
-
-  std::pair<size_t, std::array<char, word_size>> result;
-  result.first = word_size - (ptr - aligned_ptr);
-  for (size_t i = 0; i < result.first; ++i) {
-    result.second[i] = data.as_bytes[i + (ptr - aligned_ptr)];
-  }
-  return result;
-}
-
 std::string read_cstring(pid_t child, word_t ptr) {
+  static constexpr size_t buffer_size = 256;
+  char buffer[buffer_size];
+
   std::string result;
   while (true) {
-    auto [count, bytes] = read_at(child, ptr);
-    ptr += count;
+    iovec local_buffer[] = {{.iov_base = buffer, .iov_len = buffer_size}};
+    iovec remote_buffer[] = {{.iov_base = reinterpret_cast<void*>(ptr), .iov_len = buffer_size}};
+    ssize_t count = ensure(process_vm_readv(child, local_buffer, 1, remote_buffer, 1, 0));
+    assert(count > 0);
 
-    size_t to_copy = 0;
+    ssize_t to_copy = 0;
     for (; to_copy < count; ++to_copy) {
-      if (bytes[to_copy] == 0) {
+      if (buffer[to_copy] == 0) {
         break;
       }
     }
-    result += std::string_view{bytes.begin(), bytes.begin() + to_copy};
+
+    result += std::string_view{buffer, buffer + to_copy};
     if (to_copy != count) {
       break;
     }
+    ptr += to_copy;
   }
+
   return result;
 }
 
